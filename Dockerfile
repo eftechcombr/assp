@@ -1,5 +1,5 @@
 ## STAGE 1 - BUILD
-FROM perl:5.34.0-threaded AS BUILD
+FROM perl:5.36.0-threaded AS BUILD
 
 ENV VERSION ASSP_2.6.7_22137
 
@@ -34,7 +34,7 @@ RUN rm -rf /root/.cpan && \
 
 ## STAGE 2 - COPY FROM BUILD TO SLIM THREADED PERL AND 
 
-FROM perl:5.34.0-slim-threaded
+FROM perl:5.36.0-slim-threaded
 
 RUN apt update -q && \
 	apt -q -y install mariadb-client ca-certificates && \
