@@ -1,0 +1,61 @@
+version: '3.2'
+#
+### Services
+#
+services:
+#
+# ASSP
+#
+  assp:
+    image: eftechcombr/assp:2.6.7_22137
+    restart: unless-stopped
+    container_name: assp
+    ports:
+      - "25:25"
+      - "587:587"
+      - "465:465"
+      - "2525:2525"
+      - "55555:55555"
+    volumes:
+      - ./assp-data/assp.cfg:/var/db/assp/assp.cfg
+      - ./assp-data/assp.cfg.bak:/var/db/assp/assp.cfg.bak
+      - ./assp-data/certs/:/var/db/assp/certs/
+      - ./assp-data/files/:/var/db/assp/files/
+      - ./assp-data/logs/:/var/db/assp/logs/
+      - ./assp-data/tmpDB/:/var/db/assp/tmpDB/
+      - ./assp-data/virus/:/var/db/assp/virus/
+      - ./assp-data/virusscan/:/var/db/assp/virusscan/
+      - ./assp-data/sl-cache/:/var/db/assp/sl-cache/
+      - ./assp-data/spam/:/var/db/assp/spam/
+      - ./assp-data/notspam/:/var/db/assp/notspam/
+      - ./assp-data/okmail/:/var/db/assp/okmail/
+      - ./assp-data/discarded/:/var/db/assp/discarded/
+      - ./assp-data/quarantine/:/var/db/assp/quarantine/
+      - ./assp-data//errors/:/var/db/assp/errors/
+      - ./assp-data/pb/:/var/db/assp/pb/
+      - ./assp-data/mysql/:/var/db/assp/mysql/
+      # - ./certbot/:/var/db/assp/certs/certbot/
+      # assp-volume:/var/db/assp/
+    depends_on: 
+      - db
+
+#
+# MYSQL
+#
+  db: 
+    image: docker.io/mariadb:latest
+    restart: unless-stopped
+    volumes: 
+      - assp-db-volume:/var/lib/mysql:rw
+    environment: 
+      MYSQL_DATABASE: assp
+      MYSQL_USER: assp
+      MYSQL_PASSWORD: 4aae40121f24c0e9a8ebc1a78d4da966 
+      MYSQL_RANDOM_ROOT_PASSWORD: 1 
+    ports: 
+      - "3306:3306"
+
+
+volumes: 
+#  assp-volume:
+  assp-db-volume:
