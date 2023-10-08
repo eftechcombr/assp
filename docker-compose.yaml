@@ -7,7 +7,7 @@ services:
 # ASSP
 #
   assp:
-    image: eftechcombr/assp:2.6.7_22137
+    image: eftechcombr/assp:2.8.1_23131
     restart: unless-stopped
     container_name: assp
     ports:
@@ -47,11 +47,8 @@ services:
     restart: unless-stopped
     volumes: 
       - assp-db-volume:/var/lib/mysql:rw
-    environment: 
-      MYSQL_DATABASE: assp
-      MYSQL_USER: assp
-      MYSQL_PASSWORD: 4aae40121f24c0e9a8ebc1a78d4da966 
-      MYSQL_RANDOM_ROOT_PASSWORD: 1 
+    env_file:
+      - .env 
     ports: 
       - "3306:3306"
 
