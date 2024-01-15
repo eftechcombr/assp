@@ -27,6 +27,7 @@ RUN cpanm IO::Compress::Xz --force --quiet
 RUN cpanm IO::Compress::Zip --force --quiet
 RUN cpanm Archive::Libarchive --force --quiet
 RUN cpanm Alien::Libarchive --force --quiet
+RUN cpanm Archive::Libarchive::XS --force --quiet
 
 RUN rm -rf /root/.cpan && \
 	rm -rf /tmp/assp.mod.zip && \ 
