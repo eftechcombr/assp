@@ -27,18 +27,6 @@ RUN mkdir -p /var/db && \
 	unzip /tmp/assp.mod.zip 
 
 RUN perl /var/db/assp/assp.mod/install/mod_inst.pl /var/db/assp
-<<<<<<< HEAD
-RUN cpan-outdated -p | cpanm -n
-RUN cpanm Mail::SPF::Query --force --notest --quiet
-RUN cpanm IO::Socket::INET6 --force --quiet
-RUN cpanm IO::Compress::Lzma --force --quiet
-RUN cpanm IO::Compress::Xz --force --quiet
-RUN cpanm IO::Compress::Zip --force --quiet
-RUN cpanm Archive::Libarchive --force --quiet
-RUN cpanm Alien::Libarchive --force --quiet
-RUN cpanm Archive::Libarchive::XS --force --quiet
-=======
->>>>>>> d332efb (add Plugins)
 
 RUN rm -rf /root/.cpan && \
 	rm -rf /tmp/assp.mod.zip && \ 
