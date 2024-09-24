@@ -2,7 +2,7 @@ version: '3.2'
 services:
   assp:
     build: .
-    image: eftechcombr/assp:ASSP_2.8.1_23131
+    image: eftechcombr/assp:ASSP_2.8.1_24261
     restart: unless-stopped
     container_name: assp
     ports:

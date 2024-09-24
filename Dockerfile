@@ -1,7 +1,7 @@
 ## STAGE 1 - BUILD
 FROM perl:5.38.0-threaded AS BUILD
 
-ENV VERSION ASSP_2.8.1_23131
+ENV VERSION ASSP_2.8.1_24261
 
 WORKDIR /var/db/assp
 
@@ -15,13 +15,13 @@ RUN cpan-outdated -p | cpanm -n && \
 	cpanm Alien::Libarchive --force --quiet
 
 RUN cd /tmp && \
-    curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithreading/2.8.1%2023131/ASSP_2.8.1%2023131install.zip && \
+    curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithreading/2.8.1%2024261/ASSP_2.8.1%2024261install.zip && \
     curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithreading/ASSP%20V2%20module%20installation/assp.mod.zip
 
 RUN mkdir -p /var/db && \
 	mkdir -p /var/db/assp/tmpDB/files && \
 	cd /var/db && \
-	unzip "/tmp/ASSP_2.8.1%2023131install.zip" && \
+	unzip "/tmp/ASSP_2.8.1%2024261install.zip" && \
 	mv assp/assp.cfg.rename_on_new_install assp/assp.cfg && \
 	cd /var/db/assp/ && \
 	unzip /tmp/assp.mod.zip 

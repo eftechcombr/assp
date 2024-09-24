@@ -86,7 +86,7 @@ https://sourceforge.net/projects/assp/
     # ASSP
     #
       assp:
-        image: eftechcombr/assp:2.8.1_23131
+        image: eftechcombr/assp:2.8.1_24261
         restart: unless-stopped
         container_name: assp
         ports:
