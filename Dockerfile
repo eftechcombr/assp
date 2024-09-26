@@ -1,5 +1,5 @@
 ## STAGE 1 - BUILD
-FROM perl:5.38.0-threaded AS BUILD
+FROM perl:5.41.4-threaded AS BUILD
 
 ENV VERSION ASSP_2.8.1_24261
 
@@ -54,15 +54,15 @@ RUN curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithread
 RUN curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithreading/Plugins/ASSP_ARC%20-%20Archive%20Plugin/ASSP_ARC_2.11.zip && \
 	unzip ASSP_ARC_2.11.zip
 	
-RUN curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithreading/Plugins/ASSP_AFC%20-%20AttachmentFullCheck%20Plugin/ASSP_AFC_5.46.zip && \
-    unzip ASSP_AFC_5.46.zip	
+RUN curl -OL https://sourceforge.net/projects/assp/files/ASSP%20V2%20multithreading/Plugins/ASSP_AFC%20-%20AttachmentFullCheck%20Plugin/ASSP_AFC_5.52.zip && \
+    unzip ASSP_AFC_5.52.zip	
 
 RUN rm -rf *.zip
 	
 
 ## STAGE 2 - COPY FROM BUILD TO SLIM THREADED PERL AND 
 
-FROM perl:5.38.0-slim-threaded
+FROM perl:5.41.4-slim-threaded
 
 RUN apt update -q && \
 	apt -q -y install mariadb-client ca-certificates && \
