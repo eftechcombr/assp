@@ -1,0 +1,51 @@
+# templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "assp.fullname" . }}
+  labels:
+    {{- include "assp.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "assp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.assp.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "assp.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ include "assp.name" . }}
+          image: "{{ .Values.assp.image.repository }}:{{ .Values.assp.image.tag }}"
+          imagePullPolicy: {{ .Values.assp.image.pullPolicy }}
+          ports:
+            - name: smtp
+              containerPort: 25
+              protocol: TCP
+            - name: smtps
+              containerPort: 465
+              protocol: TCP
+            - name: submission
+              containerPort: 587
+              protocol: TCP
+            - name: web
+              containerPort: 55555
+              protocol: TCP
+          volumeMounts:
+            - name: assp-data
+              mountPath: /var/db/assp
+          resources:
+            {{- toYaml .Values.assp.resources | nindent 12 }}
+      volumes:
+        - name: assp-data
+        {{- if .Values.assp.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "assp.fullname" . }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}

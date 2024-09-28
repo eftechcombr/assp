@@ -1,0 +1,18 @@
+# templates/pvc.yaml
+{{- if .Values.assp.persistence.enabled }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "assp.fullname" . }}
+  labels:
+    {{- include "assp.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.assp.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.assp.persistence.size }}
+  {{- with .Values.assp.persistence.storageClass }}
+  storageClassName: {{ . }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,19 @@
+# templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "assp.fullname" . }}
+  labels:
+    {{- include "assp.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.assp.service.type }}
+  ports:
+    - port: {{ .Values.assp.service.port }}
+      targetPort: {{ .Values.assp.service.targetPort }}
+      protocol: TCP
+      name: smtp
+  {{- if and (eq .Values.assp.service.type "NodePort") (.Values.assp.service.nodePort) }}
+    nodePort: {{ .Values.assp.service.nodePort }}
+  {{- end }}
+  selector:
+    {{- include "assp.selectorLabels" . | nindent 4 }}
